@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "titulo": "Comprar pan",
+    "artista": "Desconocido",
+    "estado": "pendiente"
+  },
+  {
+    "id": 2,
+    "titulo": "Ensayo general",
+    "artista": "Banda local",
+    "estado": "ensayada"
+  }
+]

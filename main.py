@@ -1,48 +1,60 @@
-from tareas import agregar, completar, listar
+from almacen import Almacen
+from comandos.agregar import agregar
+from comandos.cambiar_estado import cambiar_estado
+from comandos.listar import listar
 
 
 def mostrar_menu():
     print()
-    print("Lista de tareas")
-    print("1. Agregar tarea")
-    print("2. Listar tareas")
-    print("3. Marcar como completada")
+    print("Gestor de setlist")
+    print("1. Agregar canción")
+    print("2. Listar canciones")
+    print("3. Cambiar estado")
     print("4. Salir")
 
 
 def main():
+    almacen = Almacen()
     while True:
         mostrar_menu()
         opcion = input("Elegí una opción: ").strip()
 
         if opcion == "1":
-            texto = input("Texto de la tarea: ").strip()
-            if not texto:
-                print("La tarea no puede estar vacía.")
+            titulo = input("Título: ").strip()
+            artista = input("Artista: ").strip()
+            try:
+                cancion = agregar(almacen, titulo, artista)
+            except ValueError as error:
+                print(error)
                 continue
-            tarea = agregar(texto)
-            print(f"Tarea agregada (id {tarea['id']}).")
+            print(f"Canción agregada (id {cancion.id}).")
 
         elif opcion == "2":
-            tareas = listar()
-            if not tareas:
-                print("No hay tareas.")
+            canciones = listar(almacen)
+            if not canciones:
+                print("No hay canciones.")
                 continue
-            for tarea in tareas:
-                estado = "completada" if tarea["completada"] else "pendiente"
-                print(f"{tarea['id']}. [{estado}] {tarea['texto']}")
+            for cancion in canciones:
+                print(
+                    f"{cancion.id}. [{cancion.estado}] {cancion.titulo} — {cancion.artista}"
+                )
 
         elif opcion == "3":
             try:
-                id_tarea = int(input("Id de la tarea: ").strip())
+                id_cancion = int(input("Id de la canción: ").strip())
             except ValueError:
                 print("El id tiene que ser un número.")
                 continue
-            tarea = completar(id_tarea)
-            if tarea is None:
-                print("No existe una tarea con ese id.")
+            estado = input("Estado (pendiente, ensayada, tocada): ").strip()
+            try:
+                cancion = cambiar_estado(almacen, id_cancion, estado)
+            except ValueError as error:
+                print(error)
+                continue
+            if cancion is None:
+                print("No existe una canción con ese id.")
             else:
-                print(f"Tarea {tarea['id']} marcada como completada.")
+                print(f"Canción {cancion.id} ahora está {cancion.estado}.")
 
         elif opcion == "4":
             print("Hasta luego.")
