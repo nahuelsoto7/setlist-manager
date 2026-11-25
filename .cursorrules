@@ -1,0 +1,11 @@
+# Reglas del Agente para Setlist Manager
+
+## Verificación (OBLIGATORIO)
+- Antes de decir que una tarea está terminada, DEBES ejecutar `.\gate.ps1` en la terminal.
+- Si el gate falla (exit code 1), arreglá el código. NUNCA modifiques, borres o debilites los tests para que pasen.
+- Pegá la salida completa del gate como evidencia de que la tarea está lista.
+
+## Arquitectura
+- Cada nueva función va en la carpeta `comandos/`.
+- Cada nueva función debe tener su archivo de test en `tests/`.
+- Usá TDD: escribí el test primero, asegurate de que falle, y luego escribí el código.
